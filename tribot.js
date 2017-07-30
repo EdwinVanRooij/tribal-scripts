@@ -13,7 +13,6 @@ function getInputField(type) {
 
 function getRate(type) {
     var stringRate = document.getElementById("premium_exchange_rate_" + type).getElementsByClassName("premium-exchange-sep")[0].textContent.replace(/\s/g, '');
-    ;
     return parseInt(stringRate);
 }
 
