@@ -1,4 +1,4 @@
-var wood = "wood";
+ var wood = "wood";
 var stone = "stone";
 var iron = "iron";
 
