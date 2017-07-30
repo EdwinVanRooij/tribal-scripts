@@ -3,20 +3,25 @@ var stone = "stone";
 var iron = "iron";
 
 function getStock(type) {
-    return document.getElementById("premium_exchange_stock_" + type).innerHTML;
+    var stringStock = document.getElementById("premium_exchange_stock_" + type).innerHTML;
+    return parseInt(stringStock);
 }
 
 function getInputField(type) {
-     return document.getElementById("premium_exchange_buy_" + type).getElementsByClassName("premium-exchange-input")[0];
+    return document.getElementById("premium_exchange_buy_" + type).getElementsByClassName("premium-exchange-input")[0];
 }
+
 function getRate(type) {
-    return document.getElementById("premium_exchange_rate_" + type).getElementsByClassName("premium-exchange-sep")[0].textContent.replace(/\s/g, '');
+    var stringRate = document.getElementById("premium_exchange_rate_" + type).getElementsByClassName("premium-exchange-sep")[0].textContent.replace(/\s/g, '');;
+    return parseInt(stringRate);
 }
 
 function setValue(stock, rate, inputField) {
     if (stock >= rate) {
         var remaining = stock % rate;
-        inputField.value = stock - remaining;
+        // noinspection UnnecessaryLocalVariableJS
+        var amountToBuy = stock - remaining;
+        inputField.value = amountToBuy;
         return true;
     } else {
         inputField.value = "";
@@ -41,6 +46,10 @@ function run() {
     var ironResult = setValue(ironStock, ironRate, ironInput);
 
     if (woodResult || stoneResult || ironResult) {
+        console.log("Buying...");
+        console.log("Wood stock: " + woodStock);
+        console.log("Stone stock: " + stoneStock);
+        console.log("Iron stock: " + ironStock);
         setTimeout(function () {
             clickButtons();
         }, 500);
