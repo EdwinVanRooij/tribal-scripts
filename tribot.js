@@ -47,10 +47,7 @@ function run() {
     var ironResult = setValue(ironStock, ironRate, ironInput);
 
     if (woodResult || stoneResult || ironResult) {
-        console.log("Buying...");
-        console.log("Wood stock: " + woodStock);
-        console.log("Stone stock: " + stoneStock);
-        console.log("Iron stock: " + ironStock);
+        console.log("Buying... hout " + woodStock + ", leem " + stoneStock + ", ijzer " + ironStock);
         setTimeout(function () {
             clickButtons();
         }, 500);
