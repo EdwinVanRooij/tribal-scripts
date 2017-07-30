@@ -12,7 +12,8 @@ function getInputField(type) {
 }
 
 function getRate(type) {
-    var stringRate = document.getElementById("premium_exchange_rate_" + type).getElementsByClassName("premium-exchange-sep")[0].textContent.replace(/\s/g, '');;
+    var stringRate = document.getElementById("premium_exchange_rate_" + type).getElementsByClassName("premium-exchange-sep")[0].textContent.replace(/\s/g, '');
+    ;
     return parseInt(stringRate);
 }
 
@@ -65,7 +66,9 @@ function clickButtons() {
 
 function confirm() {
     var confirmButton = document.getElementsByClassName("btn evt-confirm-btn btn-confirm-yes")[0];
-    confirmButton.click();
+    if (confirmButton) {
+        confirmButton.click();
+    }
 }
 
 function calculate() {
