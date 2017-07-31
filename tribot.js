@@ -1,6 +1,14 @@
- var wood = "wood";
+var wood = "wood";
 var stone = "stone";
 var iron = "iron";
+
+function isBotCheckActive() {
+    // noinspection RedundantIfStatementJS
+    if (document.getElementById("bot_check")) {
+        return true;
+    }
+    return false;
+}
 
 function getStock(type) {
     var stringStock = document.getElementById("premium_exchange_stock_" + type).innerHTML;
@@ -30,6 +38,12 @@ function setValue(stock, rate, inputField) {
 }
 
 function run() {
+    // Bot check
+    if (isBotCheckActive()) {
+        console.log("Bot check is alive!");
+        return;
+    }
+
     var woodStock = getStock(wood);
     var woodInput = getInputField(wood);
     var woodRate = getRate(wood);
@@ -72,6 +86,4 @@ function calculate() {
     calculateButton.click();
 }
 
-setInterval(function () {
-    run();
-}, 210);
+setInterval(run(), 210);
