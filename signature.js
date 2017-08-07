@@ -9,16 +9,16 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     function setSignature(textBox) {
         textBox.value = "\r\n\r\n" +
-"\r\n" +
-"[color=#4b0000]_______________________[/color]\r\n" +
-"[color=#742e2e]Met vriendelijke groet,[/color]\r\n" +
-"\r\n" +
-"[color=#c65555]~[/color] [color=#a50000]team Der Eddymeister[/color]";
+            "\r\n" +
+            "[color=#4b0000]_______________________[/color]\r\n" +
+            "[color=#742e2e]Met vriendelijke groet,[/color]\r\n" +
+            "\r\n" +
+            "[color=#c65555]~[/color] [color=#a50000]team Der Eddymeister[/color]";
     }
 
     var pmTextBox = document.getElementsByClassName('easy-submit')[0];

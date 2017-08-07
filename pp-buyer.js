@@ -86,4 +86,4 @@ function calculate() {
     calculateButton.click();
 }
 
-setInterval(run(), Math.floor((Math.random() * 30) + 190););
+setInterval(run(), Math.floor((Math.random() * 30) + 190) ) ;
