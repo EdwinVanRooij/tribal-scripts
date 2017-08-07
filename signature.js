@@ -4,8 +4,7 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
-// @match        https://nl57.tribalwars.nl/game.php?*&screen=mail&*
-// @match        https://nl57.tribalwars.nl/game.php?*&screen=forum&*
+// @match        https://nl57.tribalwars.nl/game.php?*screen=mail*
 // @grant        none
 // ==/UserScript==
 
