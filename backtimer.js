@@ -2,12 +2,11 @@
 // @name         Timer
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  time shit
+// @description  try to take over the world!
 // @author       You
-// @match        https://nl*.tribalwars.nl/game.php?village=*&screen=place&try=confirm
+// @match        https://nl57.tribalwars.nl/game.php?village=*&screen=place&try=confirm
 // @grant        none
 // ==/UserScript==
-
 (function () {
     'use strict';
 
