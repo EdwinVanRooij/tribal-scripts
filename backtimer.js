@@ -99,11 +99,11 @@
                 clickAttack();
                 console.log('Clicking #0');
             } else {
-                console.log('Not clicking #1');
+                // console.log('Not clicking #1');
             }
         } else {
-            logTime('Current time of arrival: ', aHours, aMinutes, aSeconds, aMilliseconds);
-            logTime('Waiting for time of arrival: ', hours, minutes, seconds, milliseconds);
+            // logTime('Current time of arrival: ', aHours, aMinutes, aSeconds, aMilliseconds);
+            // logTime('Waiting for time of arrival: ', hours, minutes, seconds, milliseconds);
         }
     }
 
