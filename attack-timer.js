@@ -17,12 +17,16 @@
     var runAt_seconds;
     var runAt_milliseconds;
 
+    var scheduled = false;
+
     addElements();
 
     /**
-     * Registers time when
+     * Schedules the attack.
      */
-    function onBacktimeButtonClicked() {
+    function onScheduleButtonClicked() {
+        scheduled = true;
+
         var textbox = document.getElementById('time-box');
         var value = textbox.value;
         var list = value.split(":");
@@ -33,7 +37,19 @@
         runAt_seconds = Number(list[2]);
         runAt_milliseconds = Number(list[3]);
 
-        console.log('Backtime scheduled for ' + runAt_hours + ':' + runAt_minutes + ':' + runAt_seconds + '.' + runAt_milliseconds + '...');
+        notifyScheduled();
+    }
+
+    /**
+     * User feedback, notifies of schedule.
+     */
+    function notifyScheduled() {
+        var body = document.getElementById('inner-border');
+        var label;
+
+        label = document.createElement('label');
+        label.appendChild(document.createTextNode(' Scheduled attack at ' + runAt_hours + ':' + runAt_minutes + ':' + runAt_seconds + '.' + runAt_milliseconds + '.'));
+        body.appendChild(label);
     }
 
     /**
@@ -57,7 +73,7 @@
         button.classList.add('btn');
         button.classList.add('btn-attack');
         button.appendChild(document.createTextNode("Schedule"));
-        button.onclick = onBacktimeButtonClicked;
+        button.onclick = onScheduleButtonClicked;
 
         body.appendChild(button);
     }
@@ -98,6 +114,8 @@
     }
 
     function run() {
+        if (!scheduled) return;
+
         var time = getTimeOfArrivalString();
         var timeList = time.split(":");
 
