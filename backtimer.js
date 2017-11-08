@@ -10,39 +10,41 @@
 (function () {
     'use strict';
 
-    var confirmAttackButton = document.getElementsByClassName('troop_confirm_go btn btn-attack')[0];
-
     var runInterval = 10; // in ms
 
-    var hours;
-    var minutes;
-    var seconds;
-    var milliseconds;
+    var runAt_hours;
+    var runAt_minutes;
+    var runAt_seconds;
+    var runAt_milliseconds;
 
-    function onButtonClick() {
-        console.log('button clicked');
+    addElements();
 
+    /**
+     * Registers time when
+     */
+    function onBacktimeButtonClicked() {
         var textbox = document.getElementById('time-box');
         var value = textbox.value;
         var list = value.split(":");
-        hours = Number(list[0]);
-        minutes = Number(list[1]);
-        seconds = Number(list[2]);
-        milliseconds = Number(list[3]);
+
+        // Get current time in numbers
+        runAt_hours = Number(list[0]);
+        runAt_minutes = Number(list[1]);
+        runAt_seconds = Number(list[2]);
+        runAt_milliseconds = Number(list[3]);
+
+        console.log('Backtime scheduled for ' + runAt_hours + ':' + runAt_minutes + ':' + runAt_seconds + '.' + runAt_milliseconds + '...');
     }
 
-    function clickAttack() {
-        confirmAttackButton.click();
-        console.log('Clicking attack');
-    }
-
+    /**
+     * Adds HTML elements
+     */
     function addElements() {
         var body = document.getElementById('inner-border');
-
         var label, textbox, button;
 
         label = document.createElement('label');
-        label.appendChild(document.createTextNode('Time (format: hh:mm:SS:sss)  '));
+        label.appendChild(document.createTextNode('Arrive at (format hh:mm:SS:sss):'));
         textbox = document.createElement('input');
         textbox.type = 'text';
         textbox.id = 'time-box';
@@ -54,59 +56,68 @@
         button.classList.add('troop_confirm_go');
         button.classList.add('btn');
         button.classList.add('btn-attack');
-        button.appendChild(document.createTextNode("Start Backtimer"));
-        button.onclick = onButtonClick;
+        button.appendChild(document.createTextNode("Schedule"));
+        button.onclick = onBacktimeButtonClicked;
 
         body.appendChild(button);
     }
 
+    /**
+     * Get the time when troops arrive at destination, according to Tribalwars calculations.
+     */
+    function getTimeOfArrivalString() {
+        // Get time of arrival
+        var timeElement = document.getElementById('date_arrival');
+        var arrivalList = timeElement.innerText.split(" ");
+        return arrivalList[arrivalList.length - 1];
+    }
+
+
+    /**
+     * Fires the original attack button.
+     */
+    function clickAttack() {
+        var original_btn_attack = document.getElementsByClassName('troop_confirm_go btn btn-attack')[0];
+        original_btn_attack.click();
+        console.log('Clicking attack');
+    }
+
+    /**
+     * Checks whether or not the current ms is within the interval range.
+     */
     function msWithinIntervalRange(currentMs, msToRunAt, interval) {
         if (currentMs > msToRunAt) {
             // We're now just past the ms to run at
             var difference = currentMs - msToRunAt;
             // Make sure we don't press the button again, in the next interval
-            if (difference < interval) {
+            if (difference < interval * 4) { // *4, safety measure. In case we missed clicking it before, click it anyway. Better late than never.
                 return true;
             }
         }
         return false;
     }
 
-    function logTime(extra, hours, minutes, seconds, milliseconds) {
-        console.log(extra + 'Hours: ' + hours + ', mins: ' + minutes + ', seconds: ' + seconds + ', ms: ' + milliseconds);
-    }
-
-    function getCurrentTimeOfArrival() {
-        var timeElement = document.getElementById('date_arrival');
-        var arrivalList = timeElement.innerText.split(" ");
-        return arrivalList[arrivalList.length - 1];
-    }
-
     function run() {
-        var time = getCurrentTimeOfArrival();
+        var time = getTimeOfArrivalString();
         var timeList = time.split(":");
 
         var date = new Date();
 
-        var aHours = Number(timeList[0]);
-        var aMinutes = Number(timeList[1]);
-        var aSeconds = Number(timeList[2]);
-        var aMilliseconds = date.getMilliseconds();
+        var currentHours = Number(timeList[0]);
+        var currentMinutes = Number(timeList[1]);
+        var currentSeconds = Number(timeList[2]);
+        var currentMilliseconds = date.getMilliseconds();
 
-        if (aHours === hours && aMinutes === minutes && aSeconds === seconds) { // Check if we're at the right second
-            if (msWithinIntervalRange(aMilliseconds, milliseconds, runInterval)) { // if current ms is within the interval range
+        if (currentHours === runAt_hours && currentMinutes === runAt_minutes && currentSeconds === runAt_seconds) { // Check if we're at the right second
+            if (msWithinIntervalRange(currentMilliseconds,runAt_milliseconds, runInterval)) { // if current ms is within the interval range
                 clickAttack();
-                console.log('Clicking #0');
+                console.log('Clicking');
             } else {
                 // console.log('Not clicking #1');
             }
-        } else {
-            // logTime('Current time of arrival: ', aHours, aMinutes, aSeconds, aMilliseconds);
-            // logTime('Waiting for time of arrival: ', hours, minutes, seconds, milliseconds);
         }
     }
 
-    addElements();
     setInterval(function () {
         run();
     }, runInterval);
